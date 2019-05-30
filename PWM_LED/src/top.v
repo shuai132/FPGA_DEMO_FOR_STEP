@@ -3,15 +3,14 @@ module top(clk, rst, led);
     input rst;
     output led;
 
-    parameter PWM_BITS  = 10;
-    parameter PWM_RANGE = 999;
+    parameter PWM_BITS = 9;
+    parameter PWM_MAXV = 2 ** PWM_BITS - 1;
 
     wire clk1ms;
     reg [PWM_BITS-1:0] pwmValue;
 
     reg flag;
-    parameter UP   = 0;
-    parameter DOWN = 1;
+    wire pwmOut;
 
     divide #(.WIDTH(14),.N(12_000)) u1(
             .clk(clk),
@@ -23,26 +22,25 @@ module top(clk, rst, led);
         .clk(clk),
         .rst_n(rst),
         .value(pwmValue),
-        .out(led)
+        .out(pwmOut)
         );
 
     always@(posedge clk1ms or negedge rst)
     begin
-        if(!rst) begin
+        if(!rst)
+        begin
             pwmValue <= 0;
-            flag <= UP;
+            flag <= 0;
         end
-        else begin
-            if(pwmValue == PWM_RANGE)
-                flag <= DOWN;
-            else if(pwmValue == 0)
-                flag <= UP;
+        else
+        begin
+            if(pwmValue == PWM_MAXV)
+                flag <= ~flag;
 
-            if(flag == UP)
-                pwmValue <= pwmValue + 1;
-            else
-                pwmValue <= pwmValue - 1;
+            pwmValue <= pwmValue + 1;
         end
     end
+
+    assign led = flag ? pwmOut : !pwmOut;
 
 endmodule
