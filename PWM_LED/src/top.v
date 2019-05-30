@@ -32,19 +32,17 @@ module top(clk, rst, led);
             pwmValue <= 0;
             flag <= UP;
         end
-        else if(pwmValue == PWM_RANGE) begin
-            flag <= DOWN;
-            pwmValue = pwmValue - 1;
-        end
-        else if(pwmValue == 0) begin
-            flag <= UP;
-            pwmValue = pwmValue + 1;
-        end
-        else
+        else begin
+            if(pwmValue == PWM_RANGE)
+                flag <= DOWN;
+            else if(pwmValue == 0)
+                flag <= UP;
+
             if(flag == UP)
                 pwmValue <= pwmValue + 1;
             else
                 pwmValue <= pwmValue - 1;
+        end
     end
 
 endmodule
