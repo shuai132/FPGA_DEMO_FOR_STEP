@@ -61,9 +61,6 @@ set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -rise
 set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -fall
 set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -rise
 set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -fall
-set_location_assignment PIN_J5 -to clk
-set_location_assignment PIN_J9 -to rst
-set_location_assignment PIN_N15 -to led
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name FLOW_ENABLE_POWER_ANALYZER ON
@@ -71,8 +68,30 @@ set_global_assignment -name POWER_DEFAULT_INPUT_IO_TOGGLE_RATE "12.5 %"
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_global_assignment -name VERILOG_FILE ../common/divide.v
+set_location_assignment PIN_J5 -to clk
+set_location_assignment PIN_J9 -to rst
+set_location_assignment PIN_N15 -to led
+set_location_assignment PIN_E1 -to seg_led_1[0]
+set_location_assignment PIN_D2 -to seg_led_1[1]
+set_location_assignment PIN_K2 -to seg_led_1[2]
+set_location_assignment PIN_J2 -to seg_led_1[3]
+set_location_assignment PIN_G2 -to seg_led_1[4]
+set_location_assignment PIN_F5 -to seg_led_1[5]
+set_location_assignment PIN_G5 -to seg_led_1[6]
+set_location_assignment PIN_L1 -to seg_led_1[7]
+set_location_assignment PIN_E2 -to seg_led_1[8]
+set_location_assignment PIN_A3 -to seg_led_2[0]
+set_location_assignment PIN_A2 -to seg_led_2[1]
+set_location_assignment PIN_P2 -to seg_led_2[2]
+set_location_assignment PIN_P1 -to seg_led_2[3]
+set_location_assignment PIN_N1 -to seg_led_2[4]
+set_location_assignment PIN_C1 -to seg_led_2[5]
+set_location_assignment PIN_C2 -to seg_led_2[6]
+set_location_assignment PIN_R2 -to seg_led_2[7]
+set_location_assignment PIN_B1 -to seg_led_2[8]
+set_global_assignment -name VERILOG_FILE ../common/segdisp.v
 set_global_assignment -name VERILOG_FILE ../common/pwm.v
+set_global_assignment -name VERILOG_FILE ../common/divide.v
 set_global_assignment -name VERILOG_FILE src/top.v
 set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
 set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH tb -section_id eda_simulation
